@@ -1,0 +1,62 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pathfinder Skill Button Encoder</title>
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/app.css">
+
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="row">
+    <div class="large-12 columns">
+        <h1>Pathfinder Skill Button Encoder</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 medium-12 columns">
+        <div class="row">
+            <div class="large-12 medium-12 columns">
+                <label for="encodeSkill">
+                    Skill Name to Encode
+                </label>
+                <div class="input-group">
+                    <input class="input-group-field" id="encodeSkill" placeholder="Skill name to be encoded" type="text"/>
+                    <div class="input-group-button">
+                        <button id="encode" class="button">Encode</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 medium-12 columns">
+                <label for="encodedSkill">Encoded Skill</label>
+                <textarea name="encodedSkill" id="encodedSkill" cols="30" rows="10"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#encode').click(function () {
+        var input = $('#encodeSkill').val();
+
+        // normalize the input to make it match the expected data
+        var inner = input.replace(/[\(\)]/g, '').replace(/\s/g,'-');
+
+        var isKnowledgeSkill = input.match(/Knowledge \(([^\(\)]*)\)/);
+        if (isKnowledgeSkill) {
+            input = isKnowledgeSkill[1];
+        }
+
+        var button = "[" + input + "](~@{selected|character_name}|" + inner + "-Check)";
+
+        $('#encodedSkill').val(button);
+    });
+</script>
+</body>
+</html>
